@@ -43,7 +43,9 @@ def getEdgeList(artistID, depth):
 	return tuples_df
 
 def writeEdgeList(artistID, depth, filename):
-	f=open(filename, 'a')
+	f=open(filename, 'w')
 	data_for_csv=getEdgeList(artistID, depth)
 	data_for_csv.to_csv(f, index=False)
 	f.close()
+
+writeEdgeList("7jy3rLJdDQY21OgRLCZ9sD", 2, "name.csv" )
