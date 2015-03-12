@@ -19,8 +19,7 @@ app = Flask(__name__)
 def createNewPlaylist(artist_name):
 	cur = db.cursor()
 	cur.execute('''CREATE TABLE IF NOT EXISTS songs(
- 	playlistId INTEGER PRIMARY KEY
- 	AUTO_INCREMENT,
+ 	playlistId INTEGER,
  	songOrder VARCHAR(255),
  	artistName VARCHAR(255),
  	albumName VARCHAR(255),
@@ -34,15 +33,17 @@ def createNewPlaylist(artist_name):
 	combined_Edge_List=getEdgeList(ID, 2)
 	b=combined_Edge_List
 	c=pandasToNetworkX(b)
+	cur.execute('''
+ 	INSERT INTO playlists
+ 	(rootArtist)
+ 	VALUES
+ 	(%s)''',(artist_name))
+ 	g=cur.lastrowid
 	nodes=[]
 	albums=[]
 	tracks=[]
 	tracks_names=[]
-	#for i in range(30):
-	#	d=randomCentralNode(c)
-	#	nodes.append(d)
 	while len(albums)<30:
-		#e=nodes[i]
 		e=randomCentralNode(c)
 		f=fetchAlbumIds(e)
 		if len(f)==0:
@@ -76,16 +77,12 @@ def createNewPlaylist(artist_name):
 		x=i+1
 		cur.execute('''
  		INSERT INTO songs
- 		(songOrder, artistName, albumName, trackName)
+ 		(playlistId, songOrder, artistName, albumName, trackName)
  		VALUES
- 		(%s, %s, %s, %s )''',(x,ARTIST_NAME,ALBUM_NAME,TRACK_NAME))
- 	cur.execute('''
- 	INSERT INTO playlists
- 	(rootArtist)
- 	VALUES
- 	(%s)''',(artist_name))
+ 		(%s, %s, %s, %s, %s )''',(g,x,ARTIST_NAME,ALBUM_NAME,TRACK_NAME))
  	db.commit()
 createNewPlaylist("Feist")
+
 @app.route('/')
 def make_index_resp():
     # this function just renders templates/index.html when
@@ -95,7 +92,12 @@ def make_index_resp():
 
 @app.route('/playlists/')
 def make_playlists_resp():
-    return render_template('playlists.html',playlists=playlists)
+	cur = db.cursor()
+	sql = "SELECT * from playlists"
+	cur.execute(sql)
+	playlists=cur.fetchall()
+	return render_template('playlists.html',playlists=playlists)
+	db.commit()
 
 
 @app.route('/playlist/<playlistId>')
