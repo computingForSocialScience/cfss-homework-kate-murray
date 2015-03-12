@@ -1,0 +1,10 @@
+<html>
+ <body>
+ <h1>Playlists</h1>
+ <ul>
+ {% for playlist in playlists %}
+ <li><a href="/playlist/{{playlist[0]}}">{{playlist[1]}}</a>
+ {% endfor %}
+ </ul>
+ </body>
+</html> 

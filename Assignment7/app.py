@@ -102,7 +102,11 @@ def make_playlists_resp():
 
 @app.route('/playlist/<playlistId>')
 def make_playlist_resp(playlistId):
-    return render_template('playlist.html',songs=songs)
+	cur = db.cursor()
+	sql = "SELECT * from songs"
+	cur.execute(sql)
+	songs=cur.fetchall()
+	return render_template('playlist.html',songs=songs)
 
 
 @app.route('/addPlaylist/',methods=['GET','POST'])
@@ -113,6 +117,7 @@ def add_playlist():
     elif request.method == 'POST':
         # this code executes when someone fills out the form
         artistName = request.form['artistName']
+        createNewPlaylist(artistName)
         # YOUR CODE HERE
         return(redirect("/playlists/"))
 
