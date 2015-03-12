@@ -81,7 +81,6 @@ def createNewPlaylist(artist_name):
  		VALUES
  		(%s, %s, %s, %s, %s )''',(g,x,ARTIST_NAME,ALBUM_NAME,TRACK_NAME))
  	db.commit()
-createNewPlaylist("Feist")
 
 @app.route('/')
 def make_index_resp():
@@ -102,8 +101,12 @@ def make_playlists_resp():
 
 @app.route('/playlist/<playlistId>')
 def make_playlist_resp(playlistId):
+	playlistID=playlistId
 	cur = db.cursor()
-	sql = "SELECT * from songs"
+	print playlistID
+	w=int(playlistID)-1
+	x=w*30
+	sql = "SELECT * from songs limit %s,30" % (x)
 	cur.execute(sql)
 	songs=cur.fetchall()
 	return render_template('playlist.html',songs=songs)
