@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+ <title>Album list</title>
+</head>
+<body>
+ <table>
+ <tr>
+ <th>Album</th>
+ <th>Year</th>
+ </tr>
+ {% for column1 in columns1 %}
+ <tr>
+ {{column1}}
+ </tr>
+ {% endfor %}
+ </table>
