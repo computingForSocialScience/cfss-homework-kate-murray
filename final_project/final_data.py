@@ -93,6 +93,8 @@ def make_index_resp():
 	# this function just renders templates/index.html when
 	# someone goes to http://127.0.0.1:5000/
 	return(render_template('indexpage.html'))
+new_list=[]
+new_list2=[]
 @app.route('/compareColumns')
 def show_histogram():
 	import numpy as np
@@ -108,6 +110,7 @@ def show_histogram():
 	cur.execute('''
  	SELECT estimate from new_data where FIPSCode=%s and row_id=%s''',(a,b))
  	d = cur.fetchall()
+ 	print d
  	cur.execute('''
  	SELECT estimate from new_data where FIPSCode=%s and row_id=%s''',(a,c))
  	e=cur.fetchall()
@@ -120,6 +123,7 @@ def show_histogram():
  	'histogram.html',
  	d=d,e=e,figJS=figJS,figDiv=figDiv)
 	return(rendered)
+db.commit()
 if __name__ == '__main__':
 	app.debug=True
 	app.run()
