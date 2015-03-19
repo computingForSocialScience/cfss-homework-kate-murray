@@ -25,7 +25,7 @@ passwd=""
 db=pymysql.connect(db=dbname, host=host, user=user,passwd=passwd, charset='utf8')
 app = Flask(__name__)
 
-FIPSdict={ "Connecticut": 10, "Montana": 30,"Connecticut": 15, "Montana": 1}
+FIPSdict={"Mississippi": 28, "Oklahoma": 40, "Delaware": 10, "Minnesota": 27, "Illinois": 17, "Arkansas": 5, "New Mexico": 35, "Indiana": 18, "Maryland": 24, "Louisiana": 22, "Idaho": 16, "Wyoming": 56, "Tennessee": 47, "Arizona": 4, "Iowa": 19, "Michigan": 26, "Kansas": 20, "Utah": 49, "Virginia": 51, "Oregon": 41, "Connecticut": 9, "Montana": 30, "California": 6, "Massachusetts": 25, "West Virginia": 54, "South Carolina": 45, "New Hampshire": 33, "Wisconsin": 55, "Vermont": 50, "Georgia": 13, "North Dakota": 38, "Pennsylvania": 42, "Florida": 12, "Alaska": 2, "Kentucky": 21, "Hawaii": 15, "Nebraska": 31, "Missouri": 29, "Ohio": 39, "Alabama": 1, "New York": 36, "South Dakota": 46, "Colorado": 8, "New Jersey": 34, "Washington": 53, "North Carolina": 37, "District of Columbia": 11, "Texas": 48, "Nevada": 32, "Maine": 23, "Rhode Island": 44}
 area_ids=[]
 final_column_data=[]
 def gettabledata():
@@ -85,7 +85,6 @@ def gettabledata():
 				(%s, %s, %s, %s, %s)''',(column_id,column_name,tablecode,k,j))
 
 	db.commit()	
-gettabledata()
 #index page
 @app.route('/',methods=['GET','POST'])
 def make_index_resp():
