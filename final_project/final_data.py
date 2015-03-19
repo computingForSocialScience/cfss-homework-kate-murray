@@ -46,8 +46,6 @@ def gettabledata():
 	print "success one"
 	for tablecode in tablecodes:
 		print "success two"
-		db.commit()
-		cur = db.cursor()
 		for key,value in FIPSdict.items():
 			FIPSvalue=value
 			apiUrl="http://api.censusreporter.org/1.0/data/show/latest?table_ids="+tablecode+"&geo_ids=140|04000US"+str(FIPSvalue)
@@ -87,6 +85,7 @@ def gettabledata():
 				(%s, %s, %s, %s, %s)''',(column_id,column_name,tablecode,k,j))
 
 	db.commit()	
+gettabledata()
 #index page
 @app.route('/',methods=['GET','POST'])
 def make_index_resp():
